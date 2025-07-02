@@ -145,7 +145,7 @@ function Libary:Create(options)
 	end
 	
 	if OldGui then
-		--OldGui:Destroy()
+		OldGui:Destroy()
 	end
 	
 	local Gui
