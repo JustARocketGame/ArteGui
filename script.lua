@@ -34,34 +34,34 @@ if not IsDragging then
 end
 
 local  Libary = {
-	
+
 	Themes = {
 		White = {
-			
-			BackgroundColor = Color3.new(1, 1, 1),
-			BackgroundBorderColor = Color3.new(0, 0, 0),
-			
+
+			BackgroundColor = Color3.new(0.87451, 0.87451, 0.87451),
+			BackgroundBorderColor = Color3.new(0.317647, 0.317647, 0.317647),
+
 			BackgroundSecondaryColor = Color3.new(0.807843, 0.807843, 0.807843),
 			ButtonBackgroundColor = Color3.new(0.886275, 0.886275, 0.886275),
-			
-			TextColor = Color3.new(1, 1, 1),
-			TextBorderColor = Color3.new(0, 0, 0),
-			
+
+			TextColor = Color3.new(0.905882, 0.905882, 0.905882),
+			TextBorderColor = Color3.new(0.203922, 0.203922, 0.203922),
+
 		},
 		Dark = {
-			
+
 			BackgroundColor = Color3.new(0, 0, 0),
 			BackgroundBorderColor = Color3.new(0.345098, 0.345098, 0.345098),
 
-			BackgroundSecondaryColor = Color3.new(0.364706, 0.364706, 0.364706),
-			ButtonBackgroundColor = Color3.new(0.239216, 0.239216, 0.239216),
+			BackgroundSecondaryColor = Color3.new(0.219608, 0.219608, 0.219608),
+			ButtonBackgroundColor = Color3.new(0.113725, 0.113725, 0.113725),
 
 			TextColor = Color3.new(0, 0, 0),
 			TextBorderColor = Color3.new(1, 1, 1),
-			
+
 		},
 		Blue = {
-			
+
 			BackgroundColor = Color3.new(0.145098, 0.388235, 0.780392),
 			BackgroundBorderColor = Color3.new(0, 0, 0),
 
@@ -70,23 +70,33 @@ local  Libary = {
 
 			TextColor = Color3.new(1, 1, 1),
 			TextBorderColor = Color3.new(0, 0, 0),
-			
+
 		},
 		Red = {
-			
-			BackgroundColor = Color3.new(0.780392, 0.0705882, 0.0823529),
+
+			BackgroundColor = Color3.new(0.678431, 0.0627451, 0.0705882),
 			BackgroundBorderColor = Color3.new(0, 0, 0),
 
-			BackgroundSecondaryColor = Color3.new(0.658824, 0.156863, 0.164706),
+			BackgroundSecondaryColor = Color3.new(0.407843, 0.0980392, 0.101961),
 			ButtonBackgroundColor = Color3.new(0.615686, 0, 0.0117647),
 
 			TextColor = Color3.new(1, 1, 1),
 			TextBorderColor = Color3.new(0, 0, 0),
-			
+
 		},
+		Good = {
+			
+			BackgroundColor = Color3.fromRGB(99, 45, 133),
+			BackgroundBorderColor = Color3.new(0, 0, 0),
+
+			BackgroundSecondaryColor = Color3.fromRGB(144, 56, 116),
+			ButtonBackgroundColor = Color3.fromRGB(171, 58, 118),
+
+			TextColor = Color3.fromRGB(198, 48, 131),
+			TextBorderColor = Color3.new(0, 0, 0),
+			
+		}
 	},
-	
-	ToogleKey = Enum.KeyCode.Home,
 	
 }
 Libary.__index = Libary
@@ -102,10 +112,85 @@ function Libary:set_defaults(defaults, options)
 	return defaults
 end
 
+function Libary:Message(options)
+	
+	options = self:set_defaults({
+		Title = "Message",
+		MessageContent = "Hello World!"
+	}, options)
+	
+	local MessageGui = Instance.new("ScreenGui", LocalPlayer.PlayerGui)
+	MessageGui.DisplayOrder = 99999999
+	MessageGui.ResetOnSpawn = false
+	MessageGui.Name = "ArteLib_MESSAGE_124135235134134"
+	
+	local MessageDefaultPosition = UDim2.new(0.782, 0, 0.709, 0)
+	local MessageOutPosition = UDim2.new(1.5, 0, 0.709, 0)
+	
+	local Frame = Instance.new("Frame", MessageGui)
+	Frame.BackgroundTransparency = 0.25
+	Frame.BackgroundColor3 = Color3.new(0.14902, 0.14902, 0.14902)
+	Frame.Position = MessageOutPosition
+	Frame.Size = UDim2.new(0.238, 0, 0.255, 0)
+	Frame.BorderSizePixel = 0
+	
+	local UICorner = Instance.new("UICorner", Frame)
+	UICorner.CornerRadius = UDim.new(0, 8)
+	
+	local Title = Instance.new("TextLabel", Frame)
+	Title.Position = UDim2.new(0.12, 0, 0, 0)
+	Title.Size = UDim2.new(0.756, 0, 0.395, 0)
+	Title.Text = options["Title"]
+	Title.TextScaled = true
+	Title.BackgroundTransparency = 1
+	Title.BorderSizePixel = 0
+	Title.TextColor3 = Color3.new(1, 1, 1)
+	
+	local UIStroke = Instance.new("UIStroke", Title)
+	UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
+	UIStroke.Thickness = 3
+	UIStroke.Transparency = 0
+	
+	local MessageContent = Instance.new("TextLabel", Frame)
+	MessageContent.Position = UDim2.new(0.032, 0, 0.395, 0)
+	MessageContent.Size = UDim2.new(0.883, 0, 0.605, 0)
+	MessageContent.Text = options["MessageContent"]
+	MessageContent.TextScaled = true
+	MessageContent.BackgroundTransparency = 1
+	MessageContent.BorderSizePixel = 0
+	MessageContent.TextColor3 = Color3.new(1, 1, 1)
+	
+	local UIStroke = Instance.new("UIStroke", MessageContent)
+	UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
+	UIStroke.Thickness = 3
+	UIStroke.Transparency = 0
+	
+	local Tween1 = TweenService:Create(Frame, TweenInfo.new(0.5, Enum.EasingStyle.Cubic, Enum.EasingDirection.Out), {Position = MessageDefaultPosition})
+	local Tween2 = TweenService:Create(Frame, TweenInfo.new(1), {Position = MessageOutPosition})
+	
+	Tween1:Play()
+	
+	spawn(function()
+		
+		wait(2.5)
+		
+		Tween2:Play()
+		Tween2.Completed:Wait()
+		MessageGui:Destroy()
+		
+	end)
+	
+end
+
 function Libary:Create(options)
 	
-	local SelectedTabButton
+	self:Message({
+		Title = "ArteLib",
+		MessageContent = "Welcome ".. LocalPlayer.Name.. "!"
+	})
 	
+	local SelectedTabButton
+
 	local OldMousePressed = false
 	local MouseDragPosX
 	local MouseDragPosY
@@ -122,46 +207,47 @@ function Libary:Create(options)
 	Mouse.Button1Up:Connect(function()
 		MouseButtonDown = false
 	end)
-	
+
 	local OldGui
-	
+
 	local settings = {
 		Theme = "Dark"
 	}
-	
+
 	options = self:set_defaults({
 		Name = "Cheats | ".. game.PlaceId,
 		Theme = self.Themes[settings.Theme],
+		BackgroundGradient = 0
 	}, options)
-	
+
 	local succes, error = pcall(function()
 		OldGui = game:GetService("Players").LocalPlayer.PlayerGui[GuiName]
 	end)
-	
+
 	if succes == false then
 		local succes2, error2 = pcall(function()
 			OldGui = game:GetService("CoreGui")[GuiName]
 		end)
 	end
-	
+
 	if OldGui then
 		OldGui:Destroy()
 	end
-	
+
 	local Gui
-	
+
 	local succes, error = pcall(function()
 		Gui = Instance.new("ScreenGui", game:GetService("CoreGui"))
 	end)
-	
+
 	if succes == false then
 		Gui = Instance.new("ScreenGui", LocalPlayer.PlayerGui)
 	end
-	
+
 	Gui.Name = GuiName
 	Gui.DisplayOrder = 9999999999999
 	Gui.ResetOnSpawn = false
-	
+
 	local MainFrame = Instance.new("Frame", Gui)
 	MainFrame.Name = "MainFrame"
 	MainFrame.BackgroundColor3 = options["Theme"]["BackgroundColor"]
@@ -170,13 +256,50 @@ function Libary:Create(options)
 	MainFrame.BackgroundTransparency = 0.25
 	MainFrame.BorderSizePixel = 0
 	
+	local HasGradient = false
+	
+	if options["BackgroundGradient"] > 0 then
+		HasGradient = options["BackgroundGradient"]
+	end
+	
+	--[[if HasGradient then
+		
+		local Color = options["Theme"]["BackgroundColor"]
+		Color = Color3.new(Color.R * 255, Color.G * 255, Color.B * 255)
+		
+		local UIGradient = Instance.new("UIGradient", MainFrame)
+		UIGradient.Color = ColorSequence.new({
+			ColorSequenceKeypoint.new(0, Color),
+			ColorSequenceKeypoint.new(1, Color - Color3.fromRGB(HasGradient, HasGradient, HasGradient))
+		})
+		
+	end]]--
+	
+	if HasGradient then
+		local Color = options["Theme"]["BackgroundColor"]
+		Color = Color3.new(Color.R, Color.G, Color.B) -- Убедимся, что Color уже в формате Color3
+
+		-- Вычисляем второй цвет для градиента (например, затемняем)
+		local DarkerColor = Color3.fromRGB(
+			math.clamp(Color.R * 255 - HasGradient, 0, 255), -- Уменьшаем R
+			math.clamp(Color.G * 255 - HasGradient, 0, 255), -- Уменьшаем G
+			math.clamp(Color.B * 255 - HasGradient, 0, 255)  -- Уменьшаем B
+		)
+
+		local UIGradient = Instance.new("UIGradient", MainFrame)
+		UIGradient.Color = ColorSequence.new({
+			ColorSequenceKeypoint.new(0, Color),
+			ColorSequenceKeypoint.new(1, DarkerColor)
+		})
+	end
+	
 	local UICorner = Instance.new("UICorner", MainFrame)
 	UICorner.CornerRadius = UDim.new(0, 8)
-	
+
 	local UIStroke = Instance.new("UIStroke", MainFrame)
 	UIStroke.Thickness = 3
 	UIStroke.Color = options["Theme"]["BackgroundBorderColor"]
-	
+
 	local TopFrame = Instance.new("Frame", MainFrame)
 	TopFrame.Name = "TopFrame"
 	TopFrame.BackgroundColor3 = options["Theme"]["BackgroundColor"]
@@ -185,36 +308,71 @@ function Libary:Create(options)
 	TopFrame.Position = UDim2.new(0, 0, 0, 0)
 	TopFrame.Size = UDim2.new(1, 0, 0.211, 0)
 	
+	if HasGradient then
+		local Color = options["Theme"]["BackgroundColor"]
+		Color = Color3.new(Color.R, Color.G, Color.B) -- Убедимся, что Color уже в формате Color3
+
+		-- Вычисляем второй цвет для градиента (например, затемняем)
+		local DarkerColor = Color3.fromRGB(
+			math.clamp(Color.R * 255 - HasGradient, 0, 255), -- Уменьшаем R
+			math.clamp(Color.G * 255 - HasGradient, 0, 255), -- Уменьшаем G
+			math.clamp(Color.B * 255 - HasGradient, 0, 255)  -- Уменьшаем B
+		)
+
+		local UIGradient = Instance.new("UIGradient", TopFrame)
+		UIGradient.Color = ColorSequence.new({
+			ColorSequenceKeypoint.new(0, Color),
+			ColorSequenceKeypoint.new(1, DarkerColor)
+		})
+	end
+
 	TopFrame.MouseEnter:Connect(function()
 		MouseOnTopFrame = true
 	end)
-	
+
 	TopFrame.MouseLeave:Connect(function()
 		MouseOnTopFrame = false
 	end)
-	
+
 	local UICorner = Instance.new("UICorner", TopFrame)
 	UICorner.CornerRadius = UDim.new(0, 8)
 
 	local UIStroke = Instance.new("UIStroke", TopFrame)
 	UIStroke.Thickness = 3
 	UIStroke.Color = options["Theme"]["BackgroundBorderColor"]
-	
+
 	local TitleText = Instance.new("TextLabel", TopFrame)
 	TitleText.BackgroundTransparency = 1
-	TitleText.Text = options.Name
+	TitleText.Text = options.Name.. " (Using as ".. LocalPlayer.Name.. ")"
 	TitleText.TextColor3 = options["Theme"]["TextColor"]
-	TitleText.Size = UDim2.new(0.982, 0, 1, 0)
+	TitleText.Size = UDim2.new(0.881, 0, 1, 0)
 	TitleText.Position = UDim2.new(0.018, 0, 0, 0)
 	TitleText.TextScaled = true
 	TitleText.RichText = true
 	TitleText.TextXAlignment = Enum.TextXAlignment.Left
-	
+
 	local UIStroke = Instance.new("UIStroke", TitleText)
 	UIStroke.Thickness = 3
 	UIStroke.Color = options["Theme"]["TextBorderColor"]
 	UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
 	
+	local PlayerImage = Instance.new("ImageLabel", TopFrame)
+	PlayerImage.Name = "PlayerImage"
+	PlayerImage.BorderSizePixel = 0
+	PlayerImage.Size = UDim2.new(0.118, 0, 0.998)
+	PlayerImage.Position = UDim2.new(0.881, 0, 0, 0)
+	PlayerImage.BackgroundTransparency = 1
+	
+	local UICorner = Instance.new("UICorner", PlayerImage)
+	UICorner.CornerRadius = UDim.new(1, 0)
+	
+	local ImageSize = Enum.ThumbnailSize.Size420x420
+	local ImageType = Enum.ThumbnailType.HeadShot
+
+	local content = Players:GetUserThumbnailAsync(LocalPlayer.UserId, ImageType, ImageSize)
+
+	PlayerImage.Image = content
+
 	local TabsFrame = Instance.new("Frame", MainFrame)
 	TabsFrame.BackgroundTransparency = 0.25
 	TabsFrame.BackgroundColor3 = options["Theme"]["BackgroundSecondaryColor"]
@@ -223,83 +381,101 @@ function Libary:Create(options)
 	TabsFrame.BorderSizePixel = 0
 	TabsFrame.Name = "Tabs"
 	
+	if HasGradient then
+		local Color = options["Theme"]["BackgroundSecondaryColor"]
+		Color = Color3.new(Color.R, Color.G, Color.B) -- Убедимся, что Color уже в формате Color3
+
+		-- Вычисляем второй цвет для градиента (например, затемняем)
+		local DarkerColor = Color3.fromRGB(
+			math.clamp(Color.R * 255 - HasGradient + 25, 0, 255), -- Уменьшаем R
+			math.clamp(Color.G * 255 - HasGradient + 25, 0, 255), -- Уменьшаем G
+			math.clamp(Color.B * 255 - HasGradient + 25, 0, 255)  -- Уменьшаем B
+		)
+
+		local UIGradient = Instance.new("UIGradient", TabsFrame)
+		UIGradient.Color = ColorSequence.new({
+			ColorSequenceKeypoint.new(0, DarkerColor),
+			ColorSequenceKeypoint.new(1, Color)
+		})
+	end
+
 	local TabsFrame2 = Instance.new("Frame", TabsFrame)
 	TabsFrame2.BackgroundTransparency = 1
 	TabsFrame2.Position = UDim2.new(0.082, 0, 0.041, 0)
 	TabsFrame2.Size = UDim2.new(0.833, 0, 0.959, 0)
 	TabsFrame2.BorderSizePixel = 0
-	
+
 	local UIListLayout = Instance.new("UIListLayout", TabsFrame2)
 	UIListLayout.Padding = UDim.new(0, 10)
-	
+
 	local TabGui = Instance.new("Frame", MainFrame)
 	TabGui.Name = "TabGui"
 	TabGui.BackgroundTransparency = 1
 	TabGui.Position = UDim2.new(0.272, 0, 0.243, 0)
 	TabGui.Size = UDim2.new(0.715, 0, 0.737, 0)
-	
+
 	spawn(function()
 		while task.wait() do
-			
+
 			if MouseButtonDown == true then
 				if OldMousePressed == false and MouseOnTopFrame == true  and IsDragging.Value == false then
-					
+
 					OldMousePressed = true
 					Draging = true
 					IsDragging.Value = true
-					
+
 					MouseDragPosX = Mouse.X
 					MouseDragPosY = Mouse.Y
-					
+
 					GuiPosBeforeDrag = MainFrame.Position
-					
+
 				end
 			else
-				
+
 				OldMousePressed = false
 				Draging = false
 				IsDragging.Value = false
-				
+
 				MouseDragPosX = nil
 				MouseDragPosY = nil
 
 				GuiPosBeforeDrag = nil
-				
+
 			end
-			
+
 		end
 	end)
-	
+
 	spawn(function()
 		while task.wait() do
 			if Draging == true then
 				if MouseDragPosX and MouseDragPosY and MouseButtonDown and GuiPosBeforeDrag and Gui then
-					
+
 					local NewX = GuiPosBeforeDrag.X.Offset +  Mouse.X - MouseDragPosX
 					local NewY = GuiPosBeforeDrag.Y.Offset + Mouse.Y - MouseDragPosY
-					
+
 					local Tween = TweenService:Create(MainFrame, DefaultTweenInfo, {Position = UDim2.new(0, NewX, 0, NewY)})
 					Tween:Play()
-					
+
 				end
 			end
 		end
 	end)
-	
+
 	local methods = {}
-	
+
 	function methods:Hide()
 		Gui.Enabled = false
 	end
-	
+
 	function methods:Show()
 		Gui.Enabled = true
 	end
-	
+
 	function methods:Gui()
 		return Gui
 	end
-	
+
 	function methods:set_defaults2(defaults, options2)
 		defaults = defaults or {}
 		options2 = options2 or {}
@@ -308,15 +484,15 @@ function Libary:Create(options)
 		end
 		return defaults
 	end
-	
+
 	function methods:Tab(options2)
-		
+
 		local ZIndex = 9999
-		
+
 		options2 = methods:set_defaults2({
 			Name = "New Tab"
 		}, options2)
-		
+
 		local NewTab = Instance.new("TextButton", TabsFrame2)
 		NewTab.Name = "Tab_".. options2["Name"]
 		NewTab.Text = options2["Name"]
@@ -327,7 +503,7 @@ function Libary:Create(options)
 		NewTab.RichText = true
 		NewTab.BorderSizePixel = 0
 		NewTab.TextColor3 = options["Theme"]["TextColor"]
-		
+
 		local UICorner = Instance.new("UICorner", NewTab)
 		UICorner.CornerRadius = UDim.new(0, 8)
 
@@ -335,64 +511,64 @@ function Libary:Create(options)
 		UIStroke.Thickness = 3
 		UIStroke.Color = options["Theme"]["TextBorderColor"]
 		UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
-		
+
 		local UIStroke = Instance.new("UIStroke", NewTab)
 		UIStroke.Thickness = 3
 		UIStroke.Color = options["Theme"]["BackgroundBorderColor"]
 		UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-		
+
 		local TabGuiFrame  = Instance.new("Frame", TabGui)
 		TabGuiFrame.Name = NewTab.Text
 		TabGuiFrame.Position = UDim2.new(0, 0, 0, 0)
 		TabGuiFrame.Size = UDim2.new(1, 0, 1, 0)
 		TabGuiFrame.Transparency = 1
-		
+
 		local UIListLayout = Instance.new("UIListLayout", TabGuiFrame)
 		UIListLayout.Padding = UDim.new(0, 10)
 		UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-		
+
 		if TabGuiFrame.Name ~= SelectedTabButton then
 			TabGuiFrame.Visible = false
 		end
-		
+
 		NewTab.MouseButton1Up:Connect(function()
-			
+
 			SelectedTabButton = NewTab.Text
-			
+
 			local TabGuiFrame = TabGui:FindFirstChild(NewTab.Text)
 			if TabGuiFrame then
-				
+
 				for index, frame in pairs(TabGui:GetChildren()) do
 					if frame then
 						frame.Visible = false
 					end
 				end
-				
+
 				TabGuiFrame.Visible = true
-				
+
 			end
-			
+
 		end)
-		
+
 		local methods2 = {}
-		
+
 		function methods2:TabButton()
 			return NewTab
 		end
-		
+
 		function methods2:TabGui()
 			return TabGuiFrame
 		end
-		
+
 		function methods2:Button(options3)
-			
+
 			ZIndex -= 1
-			
+
 			options3 = methods:set_defaults2({
 				Text = "Button",
 				Callback = function() end
 			}, options3)
-			
+
 			local Button = Instance.new("TextButton", TabGuiFrame)
 			Button.Name = options3["Text"]
 			Button.Text = options3["Text"]
@@ -403,7 +579,7 @@ function Libary:Create(options)
 			Button.BackgroundColor3 = options["Theme"]["ButtonBackgroundColor"]
 			Button.TextColor3 = options["Theme"]["TextColor"]
 			Button.ZIndex = ZIndex
-			
+
 			local UICorner = Instance.new("UICorner", Button)
 			UICorner.CornerRadius = UDim.new(0, 8)
 
@@ -416,19 +592,19 @@ function Libary:Create(options)
 			UIStroke.Thickness = 3
 			UIStroke.Color = options["Theme"]["BackgroundBorderColor"]
 			UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-			
+
 			Button.MouseButton1Up:Connect(function()
 				options3["Callback"]()
 			end)
-			
+
 			return Button
-			
+
 		end
-		
+
 		function methods2:Label(options3)
-			
+
 			ZIndex -= 1
-			
+
 			options3 = methods:set_defaults2({
 				Text = "Button"
 			}, options3)
@@ -443,34 +619,34 @@ function Libary:Create(options)
 			Label.BackgroundColor3 = options["Theme"]["ButtonBackgroundColor"]
 			Label.TextColor3 = options["Theme"]["TextColor"]
 			Label.ZIndex = ZIndex
-			
+
 			local UIStroke = Instance.new("UIStroke", Label)
 			UIStroke.Thickness = 3
 			UIStroke.Color = options["Theme"]["TextBorderColor"]
 			UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
-			
+
 		end
-		
+
 		return methods2
-		
+
 	end
-	
+
 	SelectedTabButton = "Home"
-	
+
 	local HomeTab = methods:Tab({
 		Name = "Home"
 	})
-	
+
 	HomeTab:Label({
 		Text = "Welcome ".. LocalPlayer.DisplayName.. "!"
 	})
-	
+
 	HomeTab:Label({
 		Text = "Change Tabs In The Left Bar"
 	})
-	
+
 	return methods
-	
+
 end
 
 return setmetatable(Libary, {
