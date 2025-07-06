@@ -10,15 +10,37 @@ This is script for cheats
 
 ]]--
 
+local Simbols = {
+	"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", 
+	"N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+	"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+	"n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+	"0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+	"!", "\"", "#", "$", "%", "&", "'", "(", ")"
+}
+
+local function RandomName()
+	
+	local StringLenght = math.random(6, 10)
+	local String = ""
+	
+	for i=1, StringLenght do
+		String = String.. Simbols[math.random(1, #Simbols)]
+	end
+	
+	return String
+	
+end
+
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
 
 local LocalPlayer = Players.LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 
-local StorageName = "ArteLib_STORAGE_23491851938591347147813"
-local GuiName = "ArteLib_GUI_13414893851351395"
+local StorageName = RandomName()
 
 local StorageFolder = ReplicatedStorage:FindFirstChild(StorageName)
 if not StorageFolder then
@@ -31,6 +53,13 @@ if not IsDragging then
 	IsDragging = Instance.new("BoolValue", StorageFolder)
 	IsDragging.Value = false
 	IsDragging.Name = "IsDragging"
+end
+
+local SeeMessageHide = StorageFolder:FindFirstChild("SeeMessageHide")
+if not SeeMessageHide then
+	SeeMessageHide = Instance.new("BoolValue", StorageFolder)
+	SeeMessageHide.Value = false
+	SeeMessageHide.Name = "SeeMessageHide"
 end
 
 local  Libary = {
@@ -46,6 +75,9 @@ local  Libary = {
 
 			TextColor = Color3.new(0.905882, 0.905882, 0.905882),
 			TextBorderColor = Color3.new(0.203922, 0.203922, 0.203922),
+			
+			CheckboxOffImage = "rbxassetid://137868358915222",
+			CheckboxOnImage = "rbxassetid://11856964772"
 
 		},
 		Dark = {
@@ -58,6 +90,9 @@ local  Libary = {
 
 			TextColor = Color3.new(0, 0, 0),
 			TextBorderColor = Color3.new(1, 1, 1),
+			
+			CheckboxOffImage = "rbxassetid://137868358915222",
+			CheckboxOnImage = "rbxassetid://11856964772"
 
 		},
 		Blue = {
@@ -70,6 +105,9 @@ local  Libary = {
 
 			TextColor = Color3.new(1, 1, 1),
 			TextBorderColor = Color3.new(0, 0, 0),
+			
+			CheckboxOffImage = "rbxassetid://137868358915222",
+			CheckboxOnImage = "rbxassetid://11856964772"
 
 		},
 		Red = {
@@ -82,10 +120,13 @@ local  Libary = {
 
 			TextColor = Color3.new(1, 1, 1),
 			TextBorderColor = Color3.new(0, 0, 0),
+			
+			CheckboxOffImage = "rbxassetid://137868358915222",
+			CheckboxOnImage = "rbxassetid://11856964772"
 
 		},
 		Good = {
-			
+
 			BackgroundColor = Color3.fromRGB(99, 45, 133),
 			BackgroundBorderColor = Color3.new(0, 0, 0),
 
@@ -95,9 +136,14 @@ local  Libary = {
 			TextColor = Color3.fromRGB(198, 48, 131),
 			TextBorderColor = Color3.new(0, 0, 0),
 			
+			CheckboxOffImage = "rbxassetid://137868358915222",
+			CheckboxOnImage = "rbxassetid://11856964772"
+
 		}
 	},
 	
+	ToogleButton = "RightShift"
+
 }
 Libary.__index = Libary
 
@@ -113,30 +159,30 @@ function Libary:set_defaults(defaults, options)
 end
 
 function Libary:Message(options)
-	
+
 	options = self:set_defaults({
 		Title = "Message",
 		MessageContent = "Hello World!"
 	}, options)
-	
+
 	local MessageGui = Instance.new("ScreenGui", LocalPlayer.PlayerGui)
 	MessageGui.DisplayOrder = 99999999
 	MessageGui.ResetOnSpawn = false
-	MessageGui.Name = "ArteLib_MESSAGE_124135235134134"
-	
+	MessageGui.Name = RandomName()
+
 	local MessageDefaultPosition = UDim2.new(0.782, 0, 0.709, 0)
 	local MessageOutPosition = UDim2.new(1.5, 0, 0.709, 0)
-	
+
 	local Frame = Instance.new("Frame", MessageGui)
 	Frame.BackgroundTransparency = 0.25
 	Frame.BackgroundColor3 = Color3.new(0.14902, 0.14902, 0.14902)
 	Frame.Position = MessageOutPosition
 	Frame.Size = UDim2.new(0.238, 0, 0.255, 0)
 	Frame.BorderSizePixel = 0
-	
+
 	local UICorner = Instance.new("UICorner", Frame)
 	UICorner.CornerRadius = UDim.new(0, 8)
-	
+
 	local Title = Instance.new("TextLabel", Frame)
 	Title.Position = UDim2.new(0.12, 0, 0, 0)
 	Title.Size = UDim2.new(0.756, 0, 0.395, 0)
@@ -145,12 +191,12 @@ function Libary:Message(options)
 	Title.BackgroundTransparency = 1
 	Title.BorderSizePixel = 0
 	Title.TextColor3 = Color3.new(1, 1, 1)
-	
+
 	local UIStroke = Instance.new("UIStroke", Title)
 	UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
 	UIStroke.Thickness = 3
 	UIStroke.Transparency = 0
-	
+
 	local MessageContent = Instance.new("TextLabel", Frame)
 	MessageContent.Position = UDim2.new(0.032, 0, 0.395, 0)
 	MessageContent.Size = UDim2.new(0.883, 0, 0.605, 0)
@@ -159,36 +205,40 @@ function Libary:Message(options)
 	MessageContent.BackgroundTransparency = 1
 	MessageContent.BorderSizePixel = 0
 	MessageContent.TextColor3 = Color3.new(1, 1, 1)
-	
+
 	local UIStroke = Instance.new("UIStroke", MessageContent)
 	UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
 	UIStroke.Thickness = 3
 	UIStroke.Transparency = 0
-	
+
 	local Tween1 = TweenService:Create(Frame, TweenInfo.new(0.5, Enum.EasingStyle.Cubic, Enum.EasingDirection.Out), {Position = MessageDefaultPosition})
 	local Tween2 = TweenService:Create(Frame, TweenInfo.new(1), {Position = MessageOutPosition})
-	
+
 	Tween1:Play()
-	
+
 	spawn(function()
-		
+
 		wait(2.5)
-		
+
 		Tween2:Play()
 		Tween2.Completed:Wait()
 		MessageGui:Destroy()
-		
+
 	end)
-	
+
 end
 
 function Libary:Create(options)
 	
+	local ToogleKeycode = Enum.KeyCode[self.ToogleButton]
+	
+	local GuiEnabled = true
+	
 	self:Message({
 		Title = "ArteLib",
-		MessageContent = "Welcome ".. LocalPlayer.Name.. "!"
+		MessageContent = "Welcome ".. LocalPlayer.Name.. "! Press ".. self.ToogleButton.. " To Hide Gui"
 	})
-	
+
 	local SelectedTabButton
 
 	local OldMousePressed = false
@@ -219,21 +269,7 @@ function Libary:Create(options)
 		Theme = self.Themes[settings.Theme],
 		BackgroundGradient = 0
 	}, options)
-
-	local succes, error = pcall(function()
-		OldGui = game:GetService("Players").LocalPlayer.PlayerGui[GuiName]
-	end)
-
-	if succes == false then
-		local succes2, error2 = pcall(function()
-			OldGui = game:GetService("CoreGui")[GuiName]
-		end)
-	end
-
-	if OldGui then
-		OldGui:Destroy()
-	end
-
+	
 	local Gui
 
 	local succes, error = pcall(function()
@@ -244,7 +280,7 @@ function Libary:Create(options)
 		Gui = Instance.new("ScreenGui", LocalPlayer.PlayerGui)
 	end
 
-	Gui.Name = GuiName
+	Gui.Name = RandomName()
 	Gui.DisplayOrder = 9999999999999
 	Gui.ResetOnSpawn = false
 
@@ -255,13 +291,13 @@ function Libary:Create(options)
 	MainFrame.Size = UDim2.new(0, 727, 0, 399)
 	MainFrame.BackgroundTransparency = 0.25
 	MainFrame.BorderSizePixel = 0
-	
+
 	local HasGradient = false
-	
+
 	if options["BackgroundGradient"] > 0 then
 		HasGradient = options["BackgroundGradient"]
 	end
-	
+
 	--[[if HasGradient then
 		
 		local Color = options["Theme"]["BackgroundColor"]
@@ -274,7 +310,7 @@ function Libary:Create(options)
 		})
 		
 	end]]--
-	
+
 	if HasGradient then
 		local Color = options["Theme"]["BackgroundColor"]
 		Color = Color3.new(Color.R, Color.G, Color.B) -- Убедимся, что Color уже в формате Color3
@@ -292,7 +328,7 @@ function Libary:Create(options)
 			ColorSequenceKeypoint.new(1, DarkerColor)
 		})
 	end
-	
+
 	local UICorner = Instance.new("UICorner", MainFrame)
 	UICorner.CornerRadius = UDim.new(0, 8)
 
@@ -307,7 +343,7 @@ function Libary:Create(options)
 	TopFrame.BorderSizePixel = 0
 	TopFrame.Position = UDim2.new(0, 0, 0, 0)
 	TopFrame.Size = UDim2.new(1, 0, 0.211, 0)
-	
+
 	if HasGradient then
 		local Color = options["Theme"]["BackgroundColor"]
 		Color = Color3.new(Color.R, Color.G, Color.B) -- Убедимся, что Color уже в формате Color3
@@ -355,17 +391,17 @@ function Libary:Create(options)
 	UIStroke.Thickness = 3
 	UIStroke.Color = options["Theme"]["TextBorderColor"]
 	UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
-	
+
 	local PlayerImage = Instance.new("ImageLabel", TopFrame)
 	PlayerImage.Name = "PlayerImage"
 	PlayerImage.BorderSizePixel = 0
 	PlayerImage.Size = UDim2.new(0.118, 0, 0.998)
 	PlayerImage.Position = UDim2.new(0.881, 0, 0, 0)
 	PlayerImage.BackgroundTransparency = 1
-	
+
 	local UICorner = Instance.new("UICorner", PlayerImage)
 	UICorner.CornerRadius = UDim.new(1, 0)
-	
+
 	local ImageSize = Enum.ThumbnailSize.Size420x420
 	local ImageType = Enum.ThumbnailType.HeadShot
 
@@ -380,7 +416,7 @@ function Libary:Create(options)
 	TabsFrame.Size = UDim2.new(0.257, 0, 0.789, 0)
 	TabsFrame.BorderSizePixel = 0
 	TabsFrame.Name = "Tabs"
-	
+
 	if HasGradient then
 		local Color = options["Theme"]["BackgroundSecondaryColor"]
 		Color = Color3.new(Color.R, Color.G, Color.B) -- Убедимся, что Color уже в формате Color3
@@ -459,6 +495,27 @@ function Libary:Create(options)
 
 				end
 			end
+		end
+	end)
+	
+	UserInputService.InputBegan:Connect(function(Input, Processed)
+		if Input.KeyCode == ToogleKeycode then
+			
+			GuiEnabled = not GuiEnabled
+			Gui.Enabled = GuiEnabled
+			
+			if GuiEnabled == false then
+				if SeeMessageHide.Value == false then
+					
+					SeeMessageHide.Value = true
+					self:Message({
+						Title = "ArteLib",
+						MessageContent = "Press ".. self.ToogleButton.. " To Enable Gui"
+					})
+					
+				end
+			end
+			
 		end
 	end)
 
@@ -566,24 +623,33 @@ function Libary:Create(options)
 
 			options3 = methods:set_defaults2({
 				Text = "Button",
-				Callback = function() end
+				Callback = function() print("Button pressed!") end
 			}, options3)
 
 			local Button = Instance.new("TextButton", TabGuiFrame)
 			Button.Name = options3["Text"]
-			Button.Text = options3["Text"]
+			Button.Text = ""
 			Button.Size = UDim2.new(1, 0, 0.207, 0)
-			Button.TextScaled = true
 			Button.BorderSizePixel = 0
-			Button.RichText = true
 			Button.BackgroundColor3 = options["Theme"]["ButtonBackgroundColor"]
-			Button.TextColor3 = options["Theme"]["TextColor"]
 			Button.ZIndex = ZIndex
+			
+			local TextLabel = Instance.new("TextLabel", Button)
+			TextLabel.Position = UDim2.new(0.019, 0, 0.23, 0)
+			TextLabel.Size = UDim2.new(0.837, 0, 0.624, 0)
+			TextLabel.Text = options3["Text"]
+			TextLabel.TextScaled = true
+			TextLabel.BorderSizePixel = 0
+			TextLabel.RichText = true
+			TextLabel.TextColor3 = options["Theme"]["TextColor"]
+			TextLabel.BackgroundTransparency = 1
+			TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+			TextLabel.ZIndex = ZIndex + 1
 
 			local UICorner = Instance.new("UICorner", Button)
 			UICorner.CornerRadius = UDim.new(0, 8)
 
-			local UIStroke = Instance.new("UIStroke", Button)
+			local UIStroke = Instance.new("UIStroke", TextLabel)
 			UIStroke.Thickness = 3
 			UIStroke.Color = options["Theme"]["TextBorderColor"]
 			UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
@@ -594,6 +660,77 @@ function Libary:Create(options)
 			UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 
 			Button.MouseButton1Up:Connect(function()
+				options3["Callback"]()
+			end)
+
+			return Button
+
+		end
+		
+		function methods2:Toogle(options3)
+
+			ZIndex -= 1
+
+			options3 = methods:set_defaults2({
+				Text = "Button",
+				Value = false,
+				Callback = function() print("Button pressed!") end
+			}, options3)
+
+			local Button = Instance.new("TextButton", TabGuiFrame)
+			Button.Name = options3["Text"]
+			Button.Text = ""
+			Button.Size = UDim2.new(1, 0, 0.207, 0)
+			Button.BorderSizePixel = 0
+			Button.BackgroundColor3 = options["Theme"]["ButtonBackgroundColor"]
+			Button.ZIndex = ZIndex
+
+			local TextLabel = Instance.new("TextLabel", Button)
+			TextLabel.Position = UDim2.new(0.019, 0, 0.23, 0)
+			TextLabel.Size = UDim2.new(0.837, 0, 0.624, 0)
+			TextLabel.Text = options3["Text"]
+			TextLabel.TextScaled = true
+			TextLabel.BorderSizePixel = 0
+			TextLabel.RichText = true
+			TextLabel.TextColor3 = options["Theme"]["TextColor"]
+			TextLabel.BackgroundTransparency = 1
+			TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+			TextLabel.ZIndex = ZIndex + 1
+
+			local UICorner = Instance.new("UICorner", Button)
+			UICorner.CornerRadius = UDim.new(0, 8)
+
+			local UIStroke = Instance.new("UIStroke", TextLabel)
+			UIStroke.Thickness = 3
+			UIStroke.Color = options["Theme"]["TextBorderColor"]
+			UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
+
+			local UIStroke = Instance.new("UIStroke", Button)
+			UIStroke.Thickness = 3
+			UIStroke.Color = options["Theme"]["BackgroundBorderColor"]
+			UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+			
+			local ValueImage = Instance.new("ImageLabel", Button)
+			ValueImage.BackgroundTransparency = 1
+			ValueImage.ZIndex = ZIndex + 1
+			ValueImage.Position = UDim2.new(0.898, 0, 0.181, 0)
+			ValueImage.Size = UDim2.new(0.073, 0, 0.624, 0)
+			
+			local UICorner = Instance.new("UICorner", ValueImage)
+			UICorner.CornerRadius = UDim.new(0, 8)
+			
+			spawn(function()
+				while task.wait() do
+					if options3["Value"] == false then
+						ValueImage.Image = options["Theme"]["CheckboxOffImage"]
+					else
+						ValueImage.Image = options["Theme"]["CheckboxOnImage"]
+					end
+				end
+			end)
+
+			Button.MouseButton1Up:Connect(function()
+				options3["Value"] = not options3["Value"]
 				options3["Callback"]()
 			end)
 
